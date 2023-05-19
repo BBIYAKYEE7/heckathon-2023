@@ -1,0 +1,11 @@
+{
+  "audio": {
+    "content": "/* test.mp3 */"
+  },
+  "config": {
+    "enableAutomaticPunctuation": true,
+    "encoding": "LINEAR16",
+    "languageCode": "en-US",
+    "model": "default"
+  }
+}
