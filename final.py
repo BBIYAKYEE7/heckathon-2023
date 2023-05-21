@@ -22,22 +22,29 @@ dictionary_file = 'korean_dictionary.xml'
 # 사전 데이터 불러오기
 correction_rules = load_dictionary(dictionary_file)
 
-# 음성 입력 처리
-r = sr.Recognizer()
-with sr.Microphone() as source:
-    print("말씀해주세요:")
-    audio = r.listen(source)
+# 음성 입력 처리 반복문
+while True:
+    # 음성 입력 처리
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("말씀해주세요:")
+        audio = r.listen(source)
 
-# 음성을 텍스트로 변환
-try:
-    recognized_text = r.recognize_google(audio, language='ko-KR')
-    print("음성 인식 결과:", recognized_text)
-    corrected_text = correct_korean_text(recognized_text, correction_rules)
-    print("맞춤법 교정 결과:", corrected_text)
-except sr.UnknownValueError:
-    print("음성을 인식할 수 없습니다.")
-except sr.RequestError as e:
-    print("음성 인식 서비스에 접근할 수 없습니다:", str(e))
+    # 음성을 텍스트로 변환
+    try:
+        recognized_text = r.recognize_google(audio, language='ko-KR')
+        print("음성 인식 결과:", recognized_text)
+        corrected_text = correct_korean_text(recognized_text, correction_rules)
+        print("맞춤법 교정 결과:", corrected_text)
+    except sr.UnknownValueError:
+        print("음성을 인식할 수 없습니다.")
+    except sr.RequestError as e:
+        print("음성 인식 서비스에 접근할 수 없습니다:", str(e))
+
+    # 종료 조건 확인
+    answer = input("계속하시겠습니까? (Y/N): ")
+    if answer.lower() == 'n':
+        break
 
 # 사전 데이터를 XML 파일로 저장
 # save_dictionary(dictionary_file, correction_rules)
